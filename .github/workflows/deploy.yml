@@ -1,0 +1,63 @@
+name: Deploy pacman repo to GitHub Pages
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [update-packages]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install gh CLI
+        run: |
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm github-cli
+
+      - name: Download packages from source repos
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p public
+          cd public
+          # 从两个 PKGBUILD 源仓库的最新 Release 拉取所有软件包
+          # (包文件走 Release 资产,不受 git 100MB 单文件限制)
+          for repo in linux-PKGBUILD aw88399_acf-PKGBUILD; do
+            echo "==> 拉取 imitoy/${repo} 最新 Release 资产"
+            gh release download --repo "imitoy/${repo}" --pattern '*.pkg.tar.zst' --dir . \
+              || echo "!! ${repo} 暂无 Release,跳过"
+          done
+          ls -la
+
+      - name: Build pacman database
+        run: |
+          set -euo pipefail
+          cd public
+          if ls *.pkg.tar.zst >/dev/null 2>&1; then
+            repo-add linux-legion-audio-fix.db.tar.gz *.pkg.tar.zst
+            ln -sf linux-legion-audio-fix.db.tar.gz linux-legion-audio-fix.db
+            ln -sf linux-legion-audio-fix.files.tar.gz linux-legion-audio-fix.files
+          else
+            echo "!! 没有可用的软件包,仅部署空目录"
+          fi
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './public'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
