@@ -14,7 +14,7 @@ Server = https://imitoy.github.io/linux-legion-audio-fix
 
 2. Install pre-build packages.
 ```bash
-sudo pacman -Syu linux-legion-audio-fix aw88399-acf-firmware
+sudo pacman -Syu linux-legion-audio-fix linux-legion-audio-fix-headers linux-legion-audio-fix-docs aw88399-acf-firmware
 ```
 
 3. Update grub config
