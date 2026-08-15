@@ -1,7 +1,10 @@
 # linux-legion-audio-fix
 Arch Linux pacman repository: Legion laptop audio fix packages (linux kernel + aw88399 ACF firmware)
 
-Patches url: https://github.com/nadimkobeissi/16iax10h-linux-sound-saga
+# URLs
+Patches: https://github.com/nadimkobeissi/16iax10h-linux-sound-saga
+Patched Arch Build Script: [linux](https://github.com/imitoy/linux-PKGBUILD)
+Firmware: [aw88399-acf-firmware](https://github.com/imitoy/aw88399_acf-PKGBUILD)
 
 # Instructions
 1. Add this repository by editing `/etc/pacman.conf`:
