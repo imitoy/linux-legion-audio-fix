@@ -13,7 +13,7 @@ Firmware(aw88399-acf-firmware): [aw88399_acf-PKGBUILD](https://github.com/imitoy
 
 ```conf
 [linux-legion-audio-fix]
-SigLevel = Optional
+SigLevel = Optional                                           # Required because no signature for now
 Server = https://imitoy.github.io/linux-legion-audio-fix
 ```
 
