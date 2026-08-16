@@ -4,7 +4,7 @@ Arch Linux pacman repository: Legion laptop audio fix packages (linux kernel + a
 # URLs
 Patches: [nadimkobeissi/16iax10h-linux-sound-saga](https://github.com/nadimkobeissi/16iax10h-linux-sound-saga)
 
-Patched Arch Build Script(linux): [imitoy/linux-PKGBUILD](https://github.com/imitoy/linux-PKGBUILD)
+Build Script for Patched Linux Kernel(linux-legion-audio-fix): [imitoy/linux-PKGBUILD](https://github.com/imitoy/linux-PKGBUILD)
 
 Firmware(aw88399-acf-firmware): [imitoy/aw88399_acf-PKGBUILD](https://github.com/imitoy/aw88399_acf-PKGBUILD)
 
